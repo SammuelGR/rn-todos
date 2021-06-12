@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   inputDark: {
     backgroundColor: "#34313D",
+    color: "#F5F4F8",
   },
   inputIOSShadow: {
     shadowColor: "#000",

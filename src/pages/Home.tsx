@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Alert } from "react-native";
 
-import { Header } from '../components/Header';
-import { MyTasksList } from '../components/MyTasksList';
-import { TodoInput } from '../components/TodoInput';
+import { Header } from "../components/Header";
+import { MyTasksList } from "../components/MyTasksList";
+import { TodoInput } from "../components/TodoInput";
 
 interface Task {
   id: number;
@@ -11,18 +12,41 @@ interface Task {
 }
 
 export function Home() {
-  // const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   function handleAddTask(newTaskTitle: string) {
-    //TODO - add new task if it's not empty
+    if (!newTaskTitle) return;
+
+    const newTask = {
+      id: new Date().getTime(),
+      title: newTaskTitle,
+      done: false,
+    };
+
+    setTasks((oldTasks) => [...oldTasks, newTask]);
   }
 
   function handleMarkTaskAsDone(id: number) {
-    //TODO - mark task as done if exists
+    let taskExists = tasks.find((task) => task.id === id);
+
+    if (!taskExists) return Alert.alert("Erro", "Task não encontrada!");
+
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) task.done = !task.done;
+      return task;
+    });
+
+    setTasks(newTasks);
   }
 
   function handleRemoveTask(id: number) {
-    //TODO - remove task from state
+    let taskExists = tasks.find((task) => task.id === id);
+
+    if (!taskExists) return Alert.alert("Erro", "Task não encontrada!");
+
+    const newTasks = tasks.filter((task) => task.id !== id);
+
+    setTasks(newTasks);
   }
 
   return (
@@ -31,11 +55,11 @@ export function Home() {
 
       <TodoInput addTask={handleAddTask} />
 
-      <MyTasksList 
-        tasks={tasks} 
-        onPress={handleMarkTaskAsDone} 
-        onLongPress={handleRemoveTask} 
+      <MyTasksList
+        tasks={tasks}
+        onPress={handleMarkTaskAsDone}
+        onLongPress={handleRemoveTask}
       />
     </>
-  )
+  );
 }

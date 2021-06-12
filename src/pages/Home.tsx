@@ -13,6 +13,7 @@ interface Task {
 
 export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [theme, setTheme] = useState("light");
 
   function handleAddTask(newTaskTitle: string) {
     if (!newTaskTitle) return;
@@ -49,9 +50,14 @@ export function Home() {
     setTasks(newTasks);
   }
 
+  function handleTheme(currentTheme: string) {
+    if (currentTheme === "light") setTheme("dark");
+    else setTheme("light");
+  }
+
   return (
     <>
-      <Header />
+      <Header onChangeTheme={() => handleTheme(theme)} currentTheme={theme} />
 
       <TodoInput addTask={handleAddTask} />
 

@@ -11,23 +11,55 @@ import {
 import lightModeIcon from "../assets/icons/light-mode.png";
 import darkModeIcon from "../assets/icons/dark-mode.png";
 
-export function Header() {
+interface IHeaderProps {
+  currentTheme: string;
+  onChangeTheme: () => void;
+}
+
+export function Header({ onChangeTheme, currentTheme }: IHeaderProps) {
   return (
-    <View style={styles.header}>
+    <View
+      style={[
+        styles.header,
+        currentTheme === "light"
+          ? styles.headerBackground
+          : styles.headerBackgroundDark,
+      ]}
+    >
       <View style={styles.emptyContainer} />
 
       <View style={styles.headerTitle}>
-        <Text style={styles.headerText}>to.</Text>
-        <Text style={[styles.headerText, { fontFamily: "Poppins-SemiBold" }]}>
+        <Text
+          style={[
+            styles.headerText,
+            currentTheme === "light"
+              ? styles.headerTextColor
+              : styles.headerTextColorDark,
+          ]}
+        >
+          to.
+        </Text>
+        <Text
+          style={[
+            styles.headerText,
+            currentTheme === "light"
+              ? styles.headerTextColor
+              : styles.headerTextColorDark,
+            { fontFamily: "Poppins-SemiBold" },
+          ]}
+        >
           do
         </Text>
       </View>
 
       <View style={styles.headerRightContainer}>
-        <TouchableOpacity style={styles.headerRightButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.headerRightButton}
+          onPress={onChangeTheme}
+        >
           <Image
             resizeMode="cover"
-            source={darkModeIcon}
+            source={currentTheme === "light" ? darkModeIcon : lightModeIcon}
             style={styles.themeModeIcon}
           />
         </TouchableOpacity>
@@ -40,10 +72,15 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: StatusBar.currentHeight,
     paddingBottom: 44,
-    backgroundColor: "#273FAD",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+  },
+  headerBackground: {
+    backgroundColor: "#273FAD",
+  },
+  headerBackgroundDark: {
+    backgroundColor: "#483C67",
   },
   emptyContainer: {
     width: "33.3%",
@@ -56,8 +93,13 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    color: "#FFF",
     fontFamily: "Poppins-Regular",
+  },
+  headerTextColor: {
+    color: "#FFF",
+  },
+  headerTextColorDark: {
+    color: "#E1E1E6",
   },
   headerRightContainer: {
     alignItems: "flex-end",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 
 import { Header } from "../components/Header";
 import { MyTasksList } from "../components/MyTasksList";
@@ -56,7 +56,12 @@ export function Home() {
   }
 
   return (
-    <>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme === "light" ? "#FFF" : "#1F1F1F",
+      }}
+    >
       <Header onChangeTheme={() => handleTheme(theme)} currentTheme={theme} />
 
       <TodoInput currentTheme={theme} addTask={handleAddTask} />
@@ -66,6 +71,6 @@ export function Home() {
         onPress={handleMarkTaskAsDone}
         onLongPress={handleRemoveTask}
       />
-    </>
+    </View>
   );
 }

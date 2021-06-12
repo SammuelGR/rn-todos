@@ -59,14 +59,15 @@ export function Home() {
     <View
       style={{
         flex: 1,
-        backgroundColor: theme === "light" ? "#FFF" : "#1F1F1F",
+        backgroundColor: theme === "light" ? "#FFF" : "#191622",
       }}
     >
-      <Header onChangeTheme={() => handleTheme(theme)} currentTheme={theme} />
+      <Header currentTheme={theme} onChangeTheme={() => handleTheme(theme)} />
 
       <TodoInput currentTheme={theme} addTask={handleAddTask} />
 
       <MyTasksList
+        currentTheme={theme}
         tasks={tasks}
         onPress={handleMarkTaskAsDone}
         onLongPress={handleRemoveTask}

@@ -12,9 +12,10 @@ import checkIcon from "../assets/icons/Check.png";
 
 interface TodoInputProps {
   addTask: (task: string) => void;
+  currentTheme: string;
 }
 
-export function TodoInput({ addTask }: TodoInputProps) {
+export function TodoInput({ addTask, currentTheme }: TodoInputProps) {
   const [task, setTask] = useState("");
 
   function handleAddNewTask() {
@@ -26,15 +27,19 @@ export function TodoInput({ addTask }: TodoInputProps) {
     <View
       style={[
         styles.inputContainer,
+        currentTheme === "light" ? styles.inputLight : styles.inputDark,
         Platform.OS === "ios"
           ? styles.inputIOSShadow
           : styles.inputAndroidShadow,
       ]}
     >
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          currentTheme === "light" ? styles.inputLight : styles.inputDark,
+        ]}
         placeholder="Adicionar novo todo..."
-        placeholderTextColor="#777"
+        placeholderTextColor="#A09CB1"
         returnKeyType="send"
         value={task}
         onChangeText={setTask}
@@ -43,7 +48,12 @@ export function TodoInput({ addTask }: TodoInputProps) {
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
-        style={styles.addButton}
+        style={[
+          styles.addButton,
+          currentTheme === "light"
+            ? styles.addButtonLight
+            : styles.addButtonDark,
+        ]}
         onPress={handleAddNewTask}
       >
         <Image source={checkIcon} />
@@ -54,7 +64,6 @@ export function TodoInput({ addTask }: TodoInputProps) {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    backgroundColor: "#F5F4F8",
     borderRadius: 5,
     marginTop: -25,
     marginHorizontal: 40,
@@ -65,10 +74,15 @@ const styles = StyleSheet.create({
   input: {
     color: "#222",
     flex: 1,
-    backgroundColor: "#F5F4F8",
     paddingLeft: 12,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
+  },
+  inputLight: {
+    backgroundColor: "#F5F4F8",
+  },
+  inputDark: {
+    backgroundColor: "#34313D",
   },
   inputIOSShadow: {
     shadowColor: "#000",
@@ -83,12 +97,17 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   addButton: {
-    backgroundColor: "#3FAD27",
     height: 50,
     paddingHorizontal: 16,
     justifyContent: "center",
     alignItems: "center",
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
+  },
+  addButtonLight: {
+    backgroundColor: "#3FAD27",
+  },
+  addButtonDark: {
+    backgroundColor: "#988BC7",
   },
 });

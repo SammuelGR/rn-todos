@@ -59,7 +59,7 @@ export function Home() {
     <>
       <Header onChangeTheme={() => handleTheme(theme)} currentTheme={theme} />
 
-      <TodoInput addTask={handleAddTask} />
+      <TodoInput currentTheme={theme} addTask={handleAddTask} />
 
       <MyTasksList
         tasks={tasks}

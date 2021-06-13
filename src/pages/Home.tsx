@@ -58,11 +58,29 @@ export function Home() {
     else setTheme(themes[0]);
   }
 
+  function getBackgroundColor(currentTheme: string) {
+    switch (currentTheme) {
+      case "light":
+        return "#FFF";
+      case "dark1":
+      case "dark2":
+        return "#191622";
+      case "dark3":
+        return "#10101E";
+      case "dark4":
+        return "#191D3A";
+      case "dark5":
+        return "#262626";
+      default:
+        return "#FFF";
+    }
+  }
+
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: theme === "light" ? "#FFF" : "#191622",
+        backgroundColor: getBackgroundColor(theme),
       }}
     >
       <Header currentTheme={theme} onChangeTheme={() => handleTheme(theme)} />

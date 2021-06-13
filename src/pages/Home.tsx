@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
 
+import { themes } from "../constants/themes";
+
 import { Header } from "../components/Header";
 import { MyTasksList } from "../components/MyTasksList";
 import { TodoInput } from "../components/TodoInput";
@@ -51,8 +53,9 @@ export function Home() {
   }
 
   function handleTheme(currentTheme: string) {
-    if (currentTheme === "light") setTheme("dark");
-    else setTheme("light");
+    const index = themes.indexOf(currentTheme);
+    if (index < themes.length - 1) setTheme(themes[index + 1]);
+    else setTheme(themes[0]);
   }
 
   return (

@@ -23,21 +23,59 @@ export function TodoInput({ addTask, currentTheme }: TodoInputProps) {
     setTask("");
   }
 
+  const getCurrentTheme = () => {
+    switch (currentTheme) {
+      case "light":
+        return {
+          inputBackground: "#F5F4F8",
+          inputColor: "#222",
+          addButtonBackground: "#3FAD27",
+        };
+      case "dark1":
+      case "dark2":
+        return {
+          inputBackground: "#34313D",
+          inputColor: "#F5F4F8",
+          addButtonBackground: "#988BC7",
+        };
+      case "dark3":
+        return {
+          inputBackground: "#212136",
+          inputColor: "#F5F4F8",
+          addButtonBackground: "#565BFF",
+        };
+      case "dark4":
+        return {
+          inputBackground: "#413A6F",
+          inputColor: "#F5F4F8",
+          addButtonBackground: "#9347CA",
+        };
+      case "dark5":
+        return {
+          inputBackground: "#303030",
+          inputColor: "#F5F4F8",
+          addButtonBackground: "#181818",
+        };
+      default:
+        return {
+          inputBackground: "#F5F4F8",
+          inputColor: "#222",
+          addButtonBackground: "#3FAD27",
+        };
+    }
+  };
+
   return (
     <View
       style={[
-        styles.inputContainer,
-        currentTheme === "light" ? styles.inputLight : styles.inputDark,
+        styles(getCurrentTheme()).inputContainer,
         Platform.OS === "ios"
-          ? styles.inputIOSShadow
-          : styles.inputAndroidShadow,
+          ? styles(getCurrentTheme()).inputIOSShadow
+          : styles(getCurrentTheme()).inputAndroidShadow,
       ]}
     >
       <TextInput
-        style={[
-          styles.input,
-          currentTheme === "light" ? styles.inputLight : styles.inputDark,
-        ]}
+        style={[styles(getCurrentTheme()).input]}
         placeholder="Adicionar novo todo..."
         placeholderTextColor="#A09CB1"
         returnKeyType="send"
@@ -48,12 +86,7 @@ export function TodoInput({ addTask, currentTheme }: TodoInputProps) {
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
-        style={[
-          styles.addButton,
-          currentTheme === "light"
-            ? styles.addButtonLight
-            : styles.addButtonDark,
-        ]}
+        style={styles(getCurrentTheme()).addButton}
         onPress={handleAddNewTask}
       >
         <Image source={checkIcon} />
@@ -62,53 +95,47 @@ export function TodoInput({ addTask, currentTheme }: TodoInputProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  inputContainer: {
-    borderRadius: 5,
-    marginTop: -25,
-    marginHorizontal: 40,
-    height: 50,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  input: {
-    color: "#222",
-    flex: 1,
-    paddingLeft: 12,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-  },
-  inputLight: {
-    backgroundColor: "#F5F4F8",
-  },
-  inputDark: {
-    backgroundColor: "#34313D",
-    color: "#F5F4F8",
-  },
-  inputIOSShadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const styles = (currentTheme: {
+  inputBackground: string;
+  inputColor: string;
+  addButtonBackground: string;
+}) =>
+  StyleSheet.create({
+    inputContainer: {
+      borderRadius: 5,
+      marginTop: -25,
+      marginHorizontal: 40,
+      height: 50,
+      flexDirection: "row",
+      alignItems: "center",
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  inputAndroidShadow: {
-    elevation: 5,
-  },
-  addButton: {
-    height: 50,
-    paddingHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  addButtonLight: {
-    backgroundColor: "#3FAD27",
-  },
-  addButtonDark: {
-    backgroundColor: "#988BC7",
-  },
-});
+    input: {
+      backgroundColor: currentTheme.inputBackground,
+      color: currentTheme.inputColor,
+      flex: 1,
+      paddingLeft: 12,
+      borderTopLeftRadius: 5,
+      borderBottomLeftRadius: 5,
+    },
+    inputIOSShadow: {
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+    },
+    inputAndroidShadow: {
+      elevation: 1,
+    },
+    addButton: {
+      backgroundColor: currentTheme.addButtonBackground,
+      height: 50,
+      paddingHorizontal: 16,
+      justifyContent: "center",
+      alignItems: "center",
+      borderTopRightRadius: 5,
+      borderBottomRightRadius: 5,
+    },
+  });

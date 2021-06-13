@@ -127,7 +127,7 @@ const styles = (currentTheme: {
       shadowRadius: 3.84,
     },
     inputAndroidShadow: {
-      elevation: 1,
+      elevation: 5,
     },
     addButton: {
       backgroundColor: currentTheme.addButtonBackground,

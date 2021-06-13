@@ -66,7 +66,8 @@ export function Home() {
       case "dark2":
         return "#191622";
       case "dark3":
-        return "#10101E";
+        // return "#10101E";
+        return "#1C1C2C";
       case "dark4":
         return "#191D3A";
       case "dark5":
